@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>PizzaPalace</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>La pizza che hai scelto e': </h1>
+				<div
+					th:object="${singlePizza}"
+				>
+					<p>		
+						[[ *{name} ]]
+					</p>
+					<p>		
+						Prezzo: [[ *{priceInFloat} ]] euro
+					</p>
+					<img width="300px" alt="foto della pizza" th:src="*{imgUrl}">
+					<div>
+						<a class="btn btn-lg btn-warning rounded-0 mt-2" th:href="@{/pizzas/update/{id} (id=*{id})}">
+							Aggiorna pizza
+						</a>
+					<div>
+					</div>
+						<a class="btn btn-lg btn-danger rounded-0 mt-2" th:href="@{/pizzas/delete/{id} (id=*{id})}">
+							Elimina pizza
+						</a>
+					</div>
+					<div th:if="${isOfferActive}">
+						<p th:each="specialOffer : ${specialOffers}">
+							Prezzo gia' scontato con l'offerta "[[ ${specialOffer.getTitle()} ]]": [[ *{priceInFloat()} - *{priceInFloat()} * ${specialOffer.getDiscountPercentage()} / 100]]
+						</p>
+					</div>
+					<p th:unless="${isOfferActive}">
+						Prezzo: [[ *{priceInFloat()} ]]
+					</p>
+					<div th:if="${ingredients.size() > 0}">
+						<p>Gli ingredienti utilizzati per questa pizza sono:</p>
+						<ul>
+							<li th:each="ingredient : ${ingredients}"
+								th:object="${ingredient}"
+							>
+								[[ *{name} ]]
+							</li>
+						</ul>
+					</div>
+					<h3>
+						Offerte Speciali attive
+					</h3>
+					<div th:if="${isOfferActive}">
+						<p th:each="specialOffer : ${specialOffers}"
+							th:object="${specialOffer}"
+							>
+							[[ *{title} ]]
+						</p>
+					</div>
+					<div th:unless="${isOfferActive}">
+						Non ci sono offerte attive
+					</div>
+					<a
+						class="btn btn-success rounded-0"
+						th:href="@{/pizza/special/offer/{id} (id=*{id})}"
+					
+					>
+					Aggiungi un'offerta
+					</a>
+				</div>
+
+				<a class="mt-4 d-block" th:href="@{/}">Torna alla pagina principale</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

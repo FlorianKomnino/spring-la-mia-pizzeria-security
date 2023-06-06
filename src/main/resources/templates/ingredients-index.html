@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>PizzaPalace</title>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h2>Ecco la lista degli ingredienti della nostra pizzeria</h2>
+			<ul>
+				<li
+					class="mt-4 d-block w-75 d-flex"
+					th:each="ingredient : ${ingredients}"
+					th:object="${ingredient}"
+				>
+					--  [[ *{name} ]]
+					<div class="justify-self-end">
+						<a class="btn btn-warning" th:href="@{/ingredients/update/{id} (id=*{id})}">
+							Modifica Ingrediente
+						</a>
+						<a class="btn btn-danger" th:href="@{/ingredients/delete/{id} (id=*{id})}">
+							Elimina Ingrediente
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+</html>

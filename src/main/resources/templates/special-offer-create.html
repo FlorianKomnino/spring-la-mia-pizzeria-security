@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>PizzaPalace</title>
+</head>
+<body>
+	<h1>Crea la tua nuova offerta speciale</h1>
+	<form action="/pizza/special/offer" method="POST">
+		<label>Nome</label>
+		<input type="text" name="title">
+		<br>
+		<label 	style="color: red" 
+				th:if="${errors != null && errors.hasFieldErrors('title')}">
+			[[ ${errors.getFieldError('title').defaultMessage} ]]
+		</label>
+		<br>
+		<label>Data di inizio offerta</label>
+		<input type="date" name="startingDate">
+		<br>
+		<label 	style="color: red" 
+				th:if="${errors != null && errors.hasFieldErrors('startingDate')}">
+			[[ ${errors.getFieldError('startingDate').defaultMessage} ]]
+		</label>
+		<br>
+		<label>Data di fine offerta</label>
+		<input type="date" name="endingDate">
+		<br>
+		<label 	style="color: red" 
+				th:if="${errors != null && errors.hasFieldErrors('endingDate')}">
+			[[ ${errors.getFieldError('endingDate').defaultMessage} ]]
+		</label>
+		<label 	style="color: red" 
+				th:if="${errors != null && errors.hasFieldErrors('dateOrderCorrect')}">
+			[[ ${errors.getFieldError('dateOrderCorrect').defaultMessage} ]]
+		</label>
+		<br>
+		<label>Percentuale sconto da applicare in questa offerta</label>
+		<input type="number" name="discountPercentage">
+		<br>
+		<label 	style="color: red" 
+				th:if="${errors != null && errors.hasFieldErrors('discountPercentage')}">
+			[[ ${errors.getFieldError('discountPercentage').defaultMessage} ]]
+		</label>
+		<br>
+		<input type="text" name="pizza" th:value="${pizza.id}" hidden>
+		<input class="btn btn-success" type="submit" value="CREA">
+	</form>
+</body>
+</html>

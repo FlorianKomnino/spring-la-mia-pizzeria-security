@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>PizzaPalace</title>
+</head>
+<body th:object="${ingredient}">
+<h1>Crea qui il nuovo ingrediente</h1>
+	<form method="POST">
+		<label>Nome ingrediente</label>
+		<input type="text" name="name" th:value="*{name}">
+		<br>
+		<label>Url immagine (opzionale)</label>
+		<input type="text" name="imgUrl" th:value="*{imgUrl}">
+		<input class="btn btn-success" type="submit" value="CREA">
+	</form>
+</body>
+</html>
