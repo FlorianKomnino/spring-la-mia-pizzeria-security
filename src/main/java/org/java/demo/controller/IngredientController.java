@@ -30,10 +30,6 @@ public class IngredientController {
 		return "ingredients-index";
 	}
 	
-	
-	
-	
-
 	@GetMapping("/ingredients/create")
 	public String createIngredient(Model model) {
 		
@@ -65,48 +61,6 @@ public class IngredientController {
 		
 		return "redirect:/ingredients/list";
 	}
-
-	
-	@GetMapping("/ingredients/update/{id}")
-	public String editIngredient(
-			Model model,
-			@PathVariable int id
-		) {
-		
-		
-		Optional<Ingredient> ingredientOpt = ingredientService.findById(id);
-		Ingredient ingredient = ingredientOpt.get();
-		model.addAttribute("ingredient", ingredient);
-		
-		return "ingredient-update";
-	}
-	
-	@PostMapping("/ingredients/update")
-	public String updateIngredient(
-			Model model,
-			@PathVariable int id,
-			@Valid @ModelAttribute Ingredient ingredient,
-			BindingResult bindingResult
-		) {
-		
-		
-		if (bindingResult.hasErrors()) {
-			
-			// system error print through lambda expression
-			bindingResult.getAllErrors().forEach( (er) -> System.err.println("Errore: " + er.getDefaultMessage())  );
-			
-			model.addAttribute("ingredient", ingredient);
-			model.addAttribute("errors", bindingResult);
-			
-			return "ingredient-update";
-		}
-		
-		ingredientService.save(ingredient);
-		
-		return "redirect:/";
-	}
-	
-	
 	
 	@GetMapping("/ingredients/delete/{id}")
 	public String deleteIngredient(
