@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>PizzaPalace</title>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1>Hello, World!</h1>
+			<a
+				href="/login"
+				sec:authorize="!isAuthenticated()"
+			>LOGIN</a>
+			<a
+				href="/users/pizzasIndex"
+				sec:authorize="hasAuthority('USER')"
+			>USER</a>
+			<a
+				href="/users/pizzasIndex"
+				sec:authorize="hasAuthority('ADMIN')"
+			>ADMIN</a>
+		</div>
+	</div>
+</div>
+</body>
+</html>

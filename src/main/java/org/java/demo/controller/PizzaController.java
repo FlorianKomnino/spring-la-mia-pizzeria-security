@@ -34,7 +34,7 @@ public class PizzaController {
 	@Autowired
 	IngredientService ingredientService;
 		
-	@GetMapping("/") 
+	@GetMapping("/users/pizzasIndex") 
 	public String pizzaPlace(Model model) {
 		
 		List<Pizza> foundPizzas = pizzaService.findAll();
@@ -42,7 +42,7 @@ public class PizzaController {
 		return "index";
 	}
 	
-	@GetMapping("/pizzas/{id}")
+	@GetMapping("/users/pizzas/{id}")
 	public String findPizzaById(
 			Model model,
 			@PathVariable("id") int id
@@ -65,7 +65,7 @@ public class PizzaController {
 		return "singlePizza";
 	}
 	
-	@PostMapping("/pizzas/search")
+	@PostMapping("/users/pizzas/search")
 	public String getPizzaByTitle(Model model, @RequestParam(required = false) String name) {
 		
 		List<Pizza> foundPizzas = pizzaService.findByName(name);
@@ -75,7 +75,7 @@ public class PizzaController {
 		return "index";
 	}
 	
-	@GetMapping("/pizzas/create")
+	@GetMapping("/admin/pizzas/create")
 	public String createPizza(Model model) {
 		
 		List<Ingredient> ingredients = ingredientService.findAll();
@@ -86,7 +86,7 @@ public class PizzaController {
 		return "pizza-create";
 	}
 	
-	@PostMapping("/pizzas/create")
+	@PostMapping("/admin/pizzas/create")
 	public String storePizza(
 			Model model,
 			@Valid @ModelAttribute Pizza pizza,
@@ -112,10 +112,10 @@ public class PizzaController {
 			ingredientService.save(ing);
 		}
 		
-		return "redirect:/";
+		return "redirect:/users/pizzasIndex";
 	}
 	
-	@GetMapping("/pizzas/update/{id}")
+	@GetMapping("/admin/pizzas/update/{id}")
 	public String editPizza(
 			Model model,
 			@PathVariable int id
@@ -131,7 +131,7 @@ public class PizzaController {
 		return "pizza-update";
 	}
 	
-	@PostMapping("/pizzas/update/{id}")
+	@PostMapping("/admin/pizzas/update/{id}")
 	public String updatePizza(
 			Model model,
 			@PathVariable int id,
@@ -153,10 +153,10 @@ public class PizzaController {
 		
 		pizzaService.save(pizza);
 		
-		return "redirect:/";
+		return "redirect:/pizzasIndex";
 	}
 	
-	@GetMapping("/pizza/special/offer/{id}")
+	@GetMapping("/admin/pizza/special/offer/{id}")
 	public String specialOfferCreate(
 			Model model,
 			@PathVariable int id
@@ -169,7 +169,7 @@ public class PizzaController {
 		return "special-offer-create";
 	}
 	
-	@PostMapping("/pizza/special/offer")
+	@PostMapping("/admin/pizza/special/offer")
 	public String specialOfferStore(Model model,
 			@Valid @ModelAttribute SpecialOffer specialOffer,
 			BindingResult bindingResult
@@ -190,10 +190,10 @@ public class PizzaController {
 		}
 		
 		specialOfferService.save(specialOffer);
-		return "redirect:/";
+		return "redirect:/users/pizzasIndex";
 	}
 	
-	@GetMapping("/pizzas/delete/{id}")
+	@GetMapping("/admin/pizzas/delete/{id}")
 	public String deletePizza(
 			@PathVariable int id
 		) {
@@ -202,6 +202,6 @@ public class PizzaController {
 		Pizza selectedPizza = pizzaOpt.get();
 		pizzaService.deletePizza(selectedPizza);
 		
-		return "redirect:/";
+		return "redirect:/users/pizzasIndex";
 	}
 }

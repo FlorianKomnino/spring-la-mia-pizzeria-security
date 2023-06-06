@@ -23,12 +23,18 @@
 					</p>
 					<img width="300px" alt="foto della pizza" th:src="*{imgUrl}">
 					<div>
-						<a class="btn btn-lg btn-warning rounded-0 mt-2" th:href="@{/pizzas/update/{id} (id=*{id})}">
+						<a class="btn btn-lg btn-warning rounded-0 mt-2" 
+							th:href="@{/admin/pizzas/update/{id} (id=*{id})}"
+							sec:authorize="hasAuthority('ADMIN')"
+							>
 							Aggiorna pizza
 						</a>
 					<div>
 					</div>
-						<a class="btn btn-lg btn-danger rounded-0 mt-2" th:href="@{/pizzas/delete/{id} (id=*{id})}">
+						<a class="btn btn-lg btn-danger rounded-0 mt-2" 
+							th:href="@{/admin/pizzas/delete/{id} (id=*{id})}"
+							sec:authorize="hasAuthority('ADMIN')"
+							>
 							Elimina pizza
 						</a>
 					</div>
@@ -65,14 +71,14 @@
 					</div>
 					<a
 						class="btn btn-success rounded-0"
-						th:href="@{/pizza/special/offer/{id} (id=*{id})}"
-					
+						th:href="@{/admin/pizza/special/offer/{id} (id=*{id})}"
+						sec:authorize="hasAuthority('ADMIN')"
 					>
 					Aggiungi un'offerta
 					</a>
 				</div>
 
-				<a class="mt-4 d-block" th:href="@{/}">Torna alla pagina principale</a>
+				<a class="mt-4 d-block" th:href="@{/users/pizzasIndex}">Torna alla pagina principale</a>
 			</div>
 		</div>
 	</div>

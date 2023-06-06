@@ -9,62 +9,83 @@
 </head>
 <body>
 <div class="container">
-	<h1 class="mt-5 text-danger text-center">La tua pizzeria preferita!!</h1>
-	
-	<h2 class="mt-5 text-success">Vuoi inserire una nuova pizza?</h2>
-	<a th:href="@{/pizzas/create}">Clicca qui</a>
-	
-	<h3 class="mt-4">Puoi filtrare le nostre pizze per nome.</h3>
-	<span>Inserisci il nome che vuoi cercare o lascia il campo vuoto per visualizzare la lista completa!</span>
-	
-	<form class ="mt-2 mb-4" th:action="@{/pizzas/search}" method="POST">
-		<input type="text" name="name" th:value="${name}">
-		<input type="submit" value="Cerca">
-	</form>
-	
-	<h3>Ecco la lista delle nostre pizze:</h3>
-	<div class="d-flex" 
-		th:if="${pizzasRes.size() > 0}"
-		>	
-		<div class="card m-3 pb-3" style="width: 18rem;"
-			th:if="${pizzasRes.size() > 0}"
-			th:each="pizza : ${pizzasRes}"
-			th:object="${pizza}"
-			>
-			<figure class="w-100 h-50">
-				<img th:src="*{imgUrl}" class="card-img-top img-fluid h-100" alt="...">
-			</figure>
-			<div class="card-body h-50 d-flex flex-column justify-content-evenly">
-			    <h5 class="card-title text-center">[[ *{name} ]]</h5>
-			    <p class="card-text">[[ *{description} ]]</p>
-			    <div class="links">
-				    <a th:href="@{/pizzas/{id} (id=*{id})}" class="btn btn-primary">
-				    	Vai alla pizza
-				    </a>
-			    </div>
-			    <div>
-		    		<a class="text-warning" th:href="@{/pizzas/update/{id} (id=*{id})}">
-						Aggiorna pizza
-					</a>
-			    </div>
-			    <div>
-					<a class="text-danger" th:href="@{/pizzas/delete/{id} (id=*{id})}">
-						Elimina pizza
-					</a>
+	<div class="row">
+		<div class="col-12">
+			<h1 class="mt-5 text-danger text-center">La tua pizzeria preferita!!</h1>
+			
+			<h2 class="mt-5 text-success"
+				sec:authorize="hasAuthority('ADMIN')"
+				>
+				Vuoi inserire una nuova pizza?
+			</h2>
+			<a 	th:href="@{/admin/pizzas/create}"
+				sec:authorize="hasAuthority('ADMIN')"
+				>
+				Clicca qui
+			</a>
+			
+			<h3 class="mt-4">Puoi filtrare le nostre pizze per nome.</h3>
+			<span>Inserisci il nome che vuoi cercare o lascia il campo vuoto per visualizzare la lista completa!</span>
+			
+			<form class ="mt-2 mb-4" th:action="@{/users/pizzas/search}" method="POST">
+				<input type="text" name="name" th:value="${name}">
+				<input type="submit" value="Cerca">
+			</form>
+			
+			<h3>Ecco la lista delle nostre pizze:</h3>
+			<div class="d-flex" 
+				th:if="${pizzasRes.size() > 0}"
+				>	
+				<div class="card m-3 pb-3" style="width: 18rem;"
+					th:if="${pizzasRes.size() > 0}"
+					th:each="pizza : ${pizzasRes}"
+					th:object="${pizza}"
+					>
+					<figure class="w-100 h-50">
+						<img th:src="*{imgUrl}" class="card-img-top img-fluid h-100" alt="...">
+					</figure>
+					<div class="card-body h-50 d-flex flex-column justify-content-evenly">
+					    <h5 class="card-title text-center">[[ *{name} ]]</h5>
+					    <p class="card-text">[[ *{description} ]]</p>
+					    <div class="links">
+						    <a th:href="@{/users/pizzas/{id} (id=*{id})}" class="btn btn-primary">
+						    	Vai alla pizza
+						    </a>
+					    </div>
+					    <div>
+				    		<a class="text-warning" 
+				    			th:href="@{/admin/pizzas/update/{id} (id=*{id})}"
+				    			sec:authorize="hasAuthority('ADMIN')"
+				    			>
+								Aggiorna pizza
+							</a>
+					    </div>
+					    <div>
+							<a class="text-danger" 
+								th:href="@{/admin/pizzas/delete/{id} (id=*{id})}"
+								sec:authorize="hasAuthority('ADMIN')"
+								>
+								Elimina pizza
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
+		
+			<h5 th:unless="${pizzasRes.size() > 0}">
+				Purtroppo non ci sono pizze da mostrare...
+			</h5>
+			
+			<h5 class="mt5">Sezione aggiuntiva</h5>
+			<a href="/users/ingredients/list">Vai alla lista dei nostri ingredienti</a>
+			<br>
+			<a 	href="/admin/ingredients/create"
+				sec:authorize="hasAuthority('ADMIN')"
+				>
+				Vai alla creazione di un nuovo ingrediente
+			</a>	
 		</div>
 	</div>
-
-	<h5 th:unless="${pizzasRes.size() > 0}">
-		Purtroppo non ci sono pizze da mostrare...
-	</h5>
-	
-	<h5 class="mt5">Sezione aggiuntiva</h5>
-	<a href="/ingredients/list">Vai alla lista dei nostri ingredienti</a>
-	<br>
-	<a href="/ingredients/create">Vai alla creazione di un nuovo ingrediente</a>
-	
 </div>
 </body>
 </html>

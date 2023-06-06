@@ -9,7 +9,7 @@
 </head>
 <body th:object="${pizza}">
 	<h1>Crea la tua nuova pizza</h1>
-	<form method="POST">
+	<form th:action="@{/admin/pizzas/create}" method="POST">
 		<label>Nome</label>
 		<input type="text" name="name" th:value="*{name}">
 		<label 	style="color: red" 

@@ -20,12 +20,17 @@
 				>
 					--  [[ *{name} ]]
 					<div class="justify-self-end">
-						<a class="btn btn-danger" th:href="@{/ingredients/delete/{id} (id=*{id})}">
+						<a class="btn btn-danger" th:href="@{/admin/ingredients/delete/{id} (id=*{id})}">
 							Elimina Ingrediente
 						</a>
 					</div>
 				</li>
 			</ul>
+			<a 	href="/admin/ingredients/create"
+				sec:authorize="hasAuthority('ADMIN')"
+				>
+				Vai alla creazione di un nuovo ingrediente
+			</a>	
 		</div>
 	</div>
 </div>

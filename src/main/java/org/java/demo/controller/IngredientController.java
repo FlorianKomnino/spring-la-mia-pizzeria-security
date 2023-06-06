@@ -22,7 +22,7 @@ public class IngredientController {
 	@Autowired
 	private IngredientService ingredientService;
 	
-	@GetMapping("/ingredients/list")
+	@GetMapping("/users/ingredients/list")
 	public String ingredientsPage(Model model) {
 		
 		List<Ingredient> foundIngredients = ingredientService.findAll();
@@ -30,7 +30,7 @@ public class IngredientController {
 		return "ingredients-index";
 	}
 	
-	@GetMapping("/ingredients/create")
+	@GetMapping("/admin/ingredients/create")
 	public String createIngredient(Model model) {
 		
 		model.addAttribute("ingredient", new Ingredient());
@@ -38,7 +38,7 @@ public class IngredientController {
 		return "ingredient-create";
 	}
 	
-	@PostMapping("/ingredients/create")
+	@PostMapping("/admin/ingredients/create")
 	public String storeIngredient(
 			Model model,
 			@Valid @ModelAttribute Ingredient ingredient,
@@ -59,10 +59,10 @@ public class IngredientController {
 		
 		ingredientService.save(ingredient);
 		
-		return "redirect:/ingredients/list";
+		return "redirect:/users/ingredients/list";
 	}
 	
-	@GetMapping("/ingredients/delete/{id}")
+	@GetMapping("/admin/ingredients/delete/{id}")
 	public String deleteIngredient(
 			@PathVariable int id
 		) {
@@ -71,7 +71,7 @@ public class IngredientController {
 		Ingredient selectedIngredient = ingredientOpt.get();
 		ingredientService.deleteIngredient(selectedIngredient);
 		
-		return "redirect:/ingredients/list";
+		return "redirect:/users/ingredients/list";
 	}
 	
 }
